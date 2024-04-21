@@ -1,0 +1,1 @@
+export { default as initUser } from './user.model.js'
