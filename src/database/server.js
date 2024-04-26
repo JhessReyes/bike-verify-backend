@@ -2,7 +2,7 @@ import { Sequelize } from "sequelize";
 import { initUser } from './models/index.js';
 import pg from 'pg';
 
-import database from './config/database.js';
+import database from './config/config.js';
 const env = process.env.NODE_ENV || 'development';
 const config = database[env];
 const sequelize = new Sequelize(config.url ? config.url : (config.config, config.username, config.password), { ...config, dialect: 'postgres', dialectModule: pg });

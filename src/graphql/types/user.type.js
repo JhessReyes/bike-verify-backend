@@ -1,33 +1,36 @@
 import gql from 'graphql-tag'
 
 const userType = gql`
-    type Session {
-        id: ID!
-        type: String!
-        status: Boolean!
-        jwt: String!
-        auth: String
-    }
-
     type User {
-        id:ID!
-        name:String!
-        email:String!
+        id: ID!
+        name: String!
+        surname: String!
+        email: String!
+        phone: String
+        location: JSON
+        public: JSON
+        private: JSON
     }
 
     input CreateUserInput {
-        name:String!
-        email:String!
-        password:String!
-        planId:ID!
+        name: String!
+        surname: String
+        email: String!
+        phone: String
+        location: JSON
+        public: JSON
+        private: JSON
     }
 
     input UpdateUserInput {
         id:ID!
-        name:String
-        email:String
-        password:String
-        planId:ID
+        name: String!
+        surname: String
+        email: String!
+        phone: String
+        location: JSON
+        public: JSON
+        private: JSON
     }
 
     type UserConnection {

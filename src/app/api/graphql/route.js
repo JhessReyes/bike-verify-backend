@@ -3,7 +3,7 @@ import { startServerAndCreateNextHandler } from '@as-integrations/next';
 import { makeExecutableSchema } from '@graphql-tools/schema';
 import typeDefs from "../../../graphql/types/index";
 import resolvers from "../../../graphql/resolvers/index";
-import db from '../../../database/server.js';
+import * as db from '../../../database/server.js';
 import { AuthenticationService } from '../../../core/auth';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default'
 import { AuthenticationPlugin } from '../../../core/plugins/AuthenticationPlugin';

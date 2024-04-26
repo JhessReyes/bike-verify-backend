@@ -36,7 +36,9 @@ export function AuthenticationPlugin(): ApolloServerPlugin<BikeVerifyContext> {
                                 code: 'AUTH_INVAL_CREDENTIAL',
                             },
                         })
+                        // console.log("first contextValue", decoded)
                         const decodedSession: BikeVerifyContext["session"] = await authService.verifySession(decoded)
+                        // console.log("first contextValue", decodedSession)
                         contextValue.session = decodedSession;
                     } catch (e) {
                         error = new GraphQLError('invalid token, session not found', {
