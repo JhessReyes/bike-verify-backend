@@ -12,12 +12,15 @@
   "type": "module",
   "dependencies": {
     "@as-integrations/next": "^3.0.0",
+    "graphql-scalars": "^1.23.0",
+    "jwt-simple": "^0.5.6",
+    "lodash": "^4.17.21",
     "next": "14.2.2",
     "pg": "^8.11.5"
   },
   "devDependencies": {
     "@apollo/server": "^4.7.5",
-    "@graphql-tools/schema": "^10.0.0",
+    "@graphql-tools/schema": "^10.0.3",
     "@types/node": "^20",
     "@types/react": "18.2.79",
     "eslint": "^8",
