@@ -2,14 +2,14 @@ import gql from 'graphql-tag'
 
 const userType = gql`
     type User {
-        id: ID!
+        id:  ID!
         name: String!
         surname: String!
         email: String!
         phone: String
-        location: JSON
-        public: JSON
-        private: JSON
+        location: String
+        public: String
+        private: String
     }
 
     input CreateUserInput {
@@ -17,20 +17,20 @@ const userType = gql`
         surname: String
         email: String!
         phone: String
-        location: JSON
-        public: JSON
-        private: JSON
+        location: String
+        public: String
+        private: String
     }
 
     input UpdateUserInput {
-        id:ID!
+        id: ID!
         name: String!
         surname: String
         email: String!
         phone: String
-        location: JSON
-        public: JSON
-        private: JSON
+        location: String
+        public: String
+        private: String
     }
 
     type UserConnection {
@@ -41,14 +41,14 @@ const userType = gql`
 
     type Query {
         users(page: Int = 1, limit: Int = 20): UserConnection!,
-        user(userId: ID!): User!
+        user(userId:  ID!): User!
         me: User!
     }
 
     type Mutation {
         createUser(input: CreateUserInput!): User!
         updateUser(input: UpdateUserInput!): User
-        deleteUser(userId: ID!): User
+        deleteUser(userId:  ID!): User
     }
 `;
 
