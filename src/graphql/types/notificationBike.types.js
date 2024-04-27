@@ -20,15 +20,15 @@ const notificationBikeType = gql`
         files: [JSON]
     }
 
-    input InputNotificationType {
+   """  input InputNotificationType {
         BIKE_STOLEN
         BIKE_RECOVERED
         BIKE_LOST
-    }
+    } """
 
     input CreateNotificationBikeInput {
         bikeId: ID!
-        type: InputNotificationType!
+        type: NotificationType!
         includeInvoice: Boolean
         isGlobal: Boolean
         location: JSON
@@ -40,7 +40,7 @@ const notificationBikeType = gql`
 
     input UpdateNotificationBikeInput {
         id: ID!
-        type: InputNotificationType!
+        type: NotificationType!
         includeInvoice: Boolean
         isGlobal: Boolean
         location: JSON
