@@ -32,8 +32,8 @@ const invoiceResolver = {
             const { input } = args
             let invoice
             try {
-                invoice = await sequelize.transaction((tran) => {
-                    return Invoice.create({ ...input }, { transaction: tran })
+                invoice = await sequelize.transaction(async (tran) => {
+                    return await Invoice.create({ ...input }, { transaction: tran })
                 })
 
             } catch (error) {
@@ -46,7 +46,7 @@ const invoiceResolver = {
             return invoice
         },
         updateInvoice: async (_, { input }, { db: { Invoice, Plan, sequelize } }) => {
-            const { name, email, id, planId } = input
+            const { id } = input
             const data = await Invoice.findByPk(id)
             if (!data)
                 throw new ApolloError(

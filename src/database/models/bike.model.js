@@ -8,6 +8,12 @@ export class Bike extends Model {
             as: 'user',
             constraints: false,
         })
+
+        models.Bike.belongsTo(models.Invoice, {
+            foreignKey: 'invoiceId',
+            as: 'invoice',
+            constraints: false,
+        })
     }
 }
 
@@ -50,6 +56,7 @@ export default (sequelize) => {
             },
             status: {
                 type: DataTypes.ENUM('ACTIVE', 'STOLEN', 'LOSS'),
+                defaultValue: 'ACTIVE',
                 allowNull: true
             },
             description: {

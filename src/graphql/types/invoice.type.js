@@ -3,8 +3,6 @@ import gql from 'graphql-tag'
 const invoiceType = gql`
     type Invoice {
         id: ID!
-        userId: ID!
-        bikeId: ID!
         nameStore: String
         address: String
         location: JSON

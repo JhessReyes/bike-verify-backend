@@ -3,11 +3,6 @@ import { merge } from 'lodash'
 
 export class Invoice extends Model {
     static associate(models) {
-        models.Invoice.belongsTo(models.Bike, {
-            foreignKey: 'bikeId',
-            as: 'bike',
-            constraints: false,
-        })
         models.Invoice.belongsTo(models.User, {
             foreignKey: 'userId',
             as: 'user',
@@ -26,10 +21,6 @@ export default (sequelize) => {
                 allowNull: false,
             },
             userId: {
-                type: DataTypes.UUID,
-                allowNull: false,
-            },
-            bikeId: {
                 type: DataTypes.UUID,
                 allowNull: false,
             },
