@@ -1,7 +1,7 @@
 
 import { GraphQLError } from "graphql"
 
-const bikeResolver = {
+const notificationBikeResolver = {
     Query: {
         notificationBikes: async (_, { page, limit }, { session: { currentUser } }) => {
             if (page < 1) page = 1
@@ -29,24 +29,34 @@ const bikeResolver = {
         },
     },
     Mutation: {
-        createNotificationBike: async (_, { input }, { db: { NotificationBike, Invoice, sequelize }, session: { currentUser } }) => {
-            const { invoice } = input
+        createNotificationBike: async (_, { input },
+            {
+                db: { NotificationBike, Bike, sequelize },
+                session: { currentUser }
+            }
+        ) => {
             let notificationBike
             try {
                 notificationBike = await sequelize.transaction(async (tran) => {
-                    if (invoice) {
-                        input.invoice.userId = currentUser.id
+                    const notify = Notification.findOne({ where: { type } })
+
+                    if (!notify) {
+                        throw new ApolloError(
+                            `Notification with type: ${type} not found`,
+                            'NOT_FOUND'
+                        )
                     }
-                    return await NotificationBike.create({ ...input, userId: currentUser.id }, {
-                        include: [
-                            { model: Invoice, as: 'invoice' }
-                        ],
+
+                    return await NotificationBike.create({
+                        ...input,
+                        userId: currentUser.id,
+                        notificationId: notify.id
+                    }, {
                         transaction: tran
                     })
                 })
 
             } catch (error) {
-                console.log("first error", error)
                 error?.errors?.map((e) => {
                     throw new GraphQLError(e?.message, {
                         extensions: { code: e?.validatorKey.toUpperCase(), key: e?.path, origin: e?.origin, stacktrace: e },
@@ -56,7 +66,7 @@ const bikeResolver = {
             return notificationBike
         },
         updateNotificationBike: async (_, { input }, { db: { NotificationBike, Invoice, sequelize } }) => {
-            const { id, invoice } = input
+            const { id, type } = input
             let data = await NotificationBike.findByPk(id)
             if (!data)
                 throw new ApolloError(
@@ -66,15 +76,21 @@ const bikeResolver = {
 
             try {
                 data = await sequelize.transaction(async (tran) => {
-                    let d = await data.update({ ...input }, { transaction: tran })
+                    const notify = Notification.findOne({ where: { type } })
 
-                    if (invoice) {
-                        const i = await data.getInvoice({ transaction: tran })
-                        d.invoice = await i.update({ ...invoice }, { transaction: tran })
-                        console.log("INVOICESS", i)
+                    if (!notify) {
+                        throw new ApolloError(
+                            `Notification with type: ${type} not found`,
+                            'NOT_FOUND'
+                        )
                     }
 
-                    return d
+                    return await NotificationBike.update({
+                        ...input,
+                        notificationId: notify.id
+                    }, {
+                        transaction: tran
+                    })
                 })
 
             } catch (error) {
@@ -96,4 +112,4 @@ const bikeResolver = {
     NotificationBike: {}
 }
 
-export { bikeResolver };
+export { notificationBikeResolver };

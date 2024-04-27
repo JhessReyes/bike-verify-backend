@@ -5,11 +5,13 @@ import {
 import { userResolver } from "./user.resolver.js";
 import { invoiceResolver } from "./invoice.resolver.js";
 import { bikeResolver } from "./bike.resolver.js";
+import { notificationBikeResolver } from "./notificationBike.resolver.js"
 
 export default [
     { JSONObject: JSONObjectResolver },
     { JSON: JSONResolver },
     userResolver,
     invoiceResolver,
-    bikeResolver
+    bikeResolver,
+    notificationBikeResolver
 ];

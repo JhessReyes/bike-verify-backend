@@ -1,6 +1,6 @@
 import gql from 'graphql-tag'
 
-const notificationBike = gql`
+const notificationBikeType = gql`
     enum BikeStatus {
         ACTIVE
         STOLEN
@@ -27,7 +27,7 @@ const notificationBike = gql`
     }
 
     input CreateNotificationBikeInput {
-        notificationBikeId: ID!
+        bikeId: ID!
         type: InputNotificationType!
         includeInvoice: Boolean
         isGlobal: Boolean
@@ -39,6 +39,7 @@ const notificationBike = gql`
 
 
     input UpdateNotificationBikeInput {
+        id: ID!
         type: InputNotificationType!
         includeInvoice: Boolean
         isGlobal: Boolean
@@ -66,4 +67,4 @@ const notificationBike = gql`
     }
 `
 
-export { notificationBike };
+export { notificationBikeType };
