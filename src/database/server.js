@@ -1,5 +1,11 @@
 import { Sequelize } from "sequelize";
-import { initUser } from './models/index.js';
+import {
+    initUser,
+    initBike,
+    initNotification,
+    initNotificationBike,
+    initInvoice
+} from './models/index.js';
 import pg from 'pg';
 
 import database from './config/config.js';
@@ -16,8 +22,12 @@ try {
 
 //Sequelize Define
 const User = initUser(sequelize)
+const Bike = initBike(sequelize)
+const Notification = initNotification(sequelize)
+const NotificationBike = initNotificationBike(sequelize)
+const Invoice = initInvoice(sequelize)
 
-const db = { User }
+const db = { User, Invoice, Bike, Notification, NotificationBike }
 
 Object.keys(db).forEach(modelName => {
     if (db[modelName].associate) {
@@ -29,4 +39,4 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 export default db;
-export { sequelize, Sequelize, User };
+export { sequelize, Sequelize, User, Bike, Notification, NotificationBike, Invoice };

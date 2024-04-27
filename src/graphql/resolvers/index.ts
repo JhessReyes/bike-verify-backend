@@ -1,10 +1,12 @@
-/* import {
+import {
     JSONObjectResolver,
-    JSONResolver,
-    GraphQLJSON,
-} from 'graphql-scalars' */
+    JSONResolver
+} from 'graphql-scalars'
 import { userResolver } from "./user.resolver.js";
-
+import { invoiceResolver } from "./invoice.resolver.js";
 export default [
-    userResolver
+    { JSONObject: JSONObjectResolver },
+    { JSON: JSONResolver },
+    userResolver,
+    invoiceResolver
 ];

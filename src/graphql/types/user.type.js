@@ -7,9 +7,9 @@ const userType = gql`
         surname: String!
         email: String!
         phone: String
-        location: String
-        public: String
-        private: String
+        location: JSON
+        public: JSON
+        private: JSON
     }
 
     input CreateUserInput {
@@ -17,9 +17,9 @@ const userType = gql`
         surname: String
         email: String!
         phone: String
-        location: String
-        public: String
-        private: String
+        location: JSON
+        public: JSON
+        private: JSON
     }
 
     input UpdateUserInput {
@@ -28,9 +28,9 @@ const userType = gql`
         surname: String
         email: String!
         phone: String
-        location: String
-        public: String
-        private: String
+        location: JSON
+        public: JSON
+        private: JSON
     }
 
     type UserConnection {

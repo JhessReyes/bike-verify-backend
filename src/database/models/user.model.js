@@ -1,7 +1,31 @@
 import { Model, DataTypes } from 'sequelize'
 import { merge } from 'lodash'
 
-export class User extends Model { static associate(models) { } }
+export class User extends Model {
+    static associate(models) {
+        models.User.hasMany(models.Invoice,
+            {
+                foreignKey: 'userId',
+                constrains: false
+            }
+        )
+
+        models.User.hasMany(models.Bike,
+            {
+                foreignKey: 'userId',
+                constrains: false
+            }
+        )
+
+        models.User.hasMany(models.NotificationBike,
+            {
+                foreignKey: 'userId',
+                constrains: false
+            }
+        )
+
+    }
+}
 
 export default (sequelize) => {
     User.init(
