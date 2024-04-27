@@ -23,8 +23,8 @@ const invoiceResolver = {
 
             return result
         },
-        invoice: async (_, { userId }, { db: { Invoice } }) => {
-            return await Invoice.findByPk(userId);
+        invoice: async (_, { invoiceId }, { db: { Invoice } }) => {
+            return await Invoice.findByPk(invoiceId);
         },
     },
     Mutation: {
@@ -45,7 +45,7 @@ const invoiceResolver = {
             }
             return invoice
         },
-        updateInvoice: async (_, { input }, { db: { Invoice, Plan, sequelize } }) => {
+        updateInvoice: async (_, { input }, { db: { Invoice } }) => {
             const { id } = input
             const data = await Invoice.findByPk(id)
             if (!data)
@@ -56,11 +56,11 @@ const invoiceResolver = {
             await data.update(input)
             return data
         },
-        deleteInvoice: async (_, { userId }, { db: { Invoice } }) => {
-            let data = await Invoice.findByPk(id)
+        deleteInvoice: async (_, { invoiceId }, { db: { Invoice } }) => {
+            let data = await Invoice.findByPk(invoiceId)
             if (!data)
                 throw new ApolloError(
-                    `Category with id: ${id} not found`,
+                    `Invoice with id: ${invoiceId} not found`,
                     'NOT_FOUND'
                 )
             await data.destroy()

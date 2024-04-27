@@ -1,13 +1,14 @@
+
 import { GraphQLError } from "graphql"
 
 const bikeResolver = {
     Query: {
-        bikes: async (_, { page, limit }, { session: { currentUser } }) => {
+        notificationBikes: async (_, { page, limit }, { session: { currentUser } }) => {
             if (page < 1) page = 1
             if (limit < 1) limit = 20
 
             let result = {}
-            const rows = await currentUser.getBikes({
+            const rows = await currentUser.getNotificationBikes({
                 limit: limit,
                 offset: (page - 1) * limit,
             })
@@ -23,20 +24,20 @@ const bikeResolver = {
 
             return result
         },
-        bike: async (_, { userId }, { db: { Bike } }) => {
-            return await Bike.findByPk(userId);
+        notificationBike: async (_, { notificationBikeId }, { db: { NotificationBike } }) => {
+            return await NotificationBike.findByPk(notificationBikeId);
         },
     },
     Mutation: {
-        createBike: async (_, { input }, { db: { Bike, Invoice, sequelize }, session: { currentUser } }) => {
+        createNotificationBike: async (_, { input }, { db: { NotificationBike, Invoice, sequelize }, session: { currentUser } }) => {
             const { invoice } = input
-            let bike
+            let notificationBike
             try {
-                bike = await sequelize.transaction(async (tran) => {
+                notificationBike = await sequelize.transaction(async (tran) => {
                     if (invoice) {
                         input.invoice.userId = currentUser.id
                     }
-                    return await Bike.create({ ...input, userId: currentUser.id }, {
+                    return await NotificationBike.create({ ...input, userId: currentUser.id }, {
                         include: [
                             { model: Invoice, as: 'invoice' }
                         ],
@@ -52,14 +53,14 @@ const bikeResolver = {
                     })
                 })
             }
-            return bike
+            return notificationBike
         },
-        updateBike: async (_, { input }, { db: { Bike, sequelize } }) => {
+        updateNotificationBike: async (_, { input }, { db: { NotificationBike, Invoice, sequelize } }) => {
             const { id, invoice } = input
-            let data = await Bike.findByPk(id)
+            let data = await NotificationBike.findByPk(id)
             if (!data)
                 throw new ApolloError(
-                    `Bike with id: ${id} not found`,
+                    `NotificationBike with id: ${id} not found`,
                     'NOT_FOUND'
                 )
 
@@ -70,6 +71,7 @@ const bikeResolver = {
                     if (invoice) {
                         const i = await data.getInvoice({ transaction: tran })
                         d.invoice = await i.update({ ...invoice }, { transaction: tran })
+                        console.log("INVOICESS", i)
                     }
 
                     return d
@@ -80,18 +82,18 @@ const bikeResolver = {
             }
             return data
         },
-        deleteBike: async (_, { bikeId }, { db: { Bike } }) => {
-            let data = await Bike.findByPk(bikeId)
+        deleteNotificationBike: async (_, { notificationBikeId }, { db: { NotificationBike } }) => {
+            let data = await NotificationBike.findByPk(notificationBikeId)
             if (!data)
                 throw new ApolloError(
-                    `Bike with id: ${bikeId} not found`,
+                    `NotificationBike with id: ${notificationBikeId} not found`,
                     'NOT_FOUND'
                 )
             await data.destroy()
             return data
         }
     },
-    Bike: {}
+    NotificationBike: {}
 }
 
 export { bikeResolver };
