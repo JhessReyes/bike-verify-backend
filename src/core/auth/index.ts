@@ -21,16 +21,16 @@ class AuthenticationService implements IAuthenticationService {
                     }, { transaction: t })
                 }
 
-                console.log("USER", user.toJSON())
+                console.log("USER", user.toJSON(), "DECODED", decoded)
                 return user
             })
 
-            /*             if (!user)
-                            throw new GraphQLError('user session not found', {
-                                extensions: {
-                                    code: 'NOT_FOUND',
-                                },
-                            }) */
+            if (!user)
+                throw new GraphQLError('user session not found', {
+                    extensions: {
+                        code: 'NOT_FOUND',
+                    },
+                })
         } catch (error) {
             console.log("ERROR", error)
         }
