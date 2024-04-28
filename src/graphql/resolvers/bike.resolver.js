@@ -54,7 +54,7 @@ const bikeResolver = {
             }
             return bike
         },
-        updateBike: async (_, { input }, { db: { Bike, Invoice, sequelize } }) => {
+        updateBike: async (_, { input }, { db: { Bike, sequelize } }) => {
             const { id, invoice } = input
             let data = await Bike.findByPk(id)
             if (!data)
@@ -70,7 +70,6 @@ const bikeResolver = {
                     if (invoice) {
                         const i = await data.getInvoice({ transaction: tran })
                         d.invoice = await i.update({ ...invoice }, { transaction: tran })
-                        console.log("INVOICESS", i)
                     }
 
                     return d
@@ -81,11 +80,11 @@ const bikeResolver = {
             }
             return data
         },
-        deleteBike: async (_, { userId }, { db: { Bike } }) => {
-            let data = await Bike.findByPk(id)
+        deleteBike: async (_, { bikeId }, { db: { Bike } }) => {
+            let data = await Bike.findByPk(bikeId)
             if (!data)
                 throw new ApolloError(
-                    `Category with id: ${id} not found`,
+                    `Bike with id: ${bikeId} not found`,
                     'NOT_FOUND'
                 )
             await data.destroy()

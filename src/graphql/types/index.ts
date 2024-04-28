@@ -6,6 +6,8 @@ import gql from "graphql-tag";
 import { userType } from "./user.type.js";
 import { invoiceType } from "./invoice.type.js";
 import { bikeType } from "./bike.type.js";
+import { notificationBikeType } from "./notificationBike.types.js"
+import { notificationType } from "./notification.type.js"
 
 const GlobalTypes = gql`
     scalar DateTime
@@ -17,5 +19,7 @@ export default [
     JSONDefinition,
     userType,
     invoiceType,
-    bikeType
+    bikeType,
+    notificationBikeType,
+    notificationType
 ];

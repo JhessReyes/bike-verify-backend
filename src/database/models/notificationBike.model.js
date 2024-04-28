@@ -9,6 +9,7 @@ export class NotificationBike extends Model {
 
         models.NotificationBike.belongsTo(models.Bike, {
             foreignKey: 'bikeId',
+            as: 'bike',
             constraints: false,
         })
 

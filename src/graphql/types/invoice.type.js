@@ -42,13 +42,13 @@ const invoiceType = gql`
 
     type Query {
         invoices(page: Int = 1, limit: Int = 20): InvoiceConnection!,
-        invoice(userId:  ID!): Invoice!
+        invoice(invoiceId:  ID!): Invoice!
     }
 
     type Mutation {
         createInvoice(input: CreateInvoiceInput!): Invoice!
         updateInvoice(input: UpdateInvoiceInput!): Invoice
-        deleteInvoice(userId:  ID!): Invoice
+        deleteInvoice(invoiceId:  ID!): Invoice
     }
 `;
 
